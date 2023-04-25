@@ -3,6 +3,7 @@ import type Stripe from "stripe";
 import { buffer } from "micro";
 import { env } from "~/env.mjs";
 import { stripe } from "../../server/stripe/client";
+import { PaymentIntent } from "@stripe/stripe-js";
 
 // Stripe requires the raw body to construct the event.
 export const config = {
@@ -32,6 +33,7 @@ export default async function handler(
         case "payment_intent.processing":
           break;
         case "payment_intent.succeeded":
+          // TODO: match (event.data.object as PaymentIntent).id to saved payment_intent.id in db
           break;
         case "payment_intent.payment_failed":
           break;
